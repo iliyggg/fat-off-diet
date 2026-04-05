@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fat Off Diet — Project Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter', sans-serif;
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+  --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+  --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
+  --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem;
+  --space-12: 3rem; --space-16: 4rem; --space-20: 5rem;
+  --radius-sm: 0.375rem; --radius-md: 0.5rem; --radius-lg: 0.75rem;
+  --radius-xl: 1rem; --radius-full: 9999px;
+  --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+:root, [data-theme="light"] {
+  --bg: #f7f6f2; --surface: #f9f8f5; --surface-2: #fbfbf9;
+  --surface-off: #f0ede8; --border: #d4d1ca; --divider: #dcd9d5;
+  --text: #28251d; --text-muted: #7a7974; --text-faint: #bab9b4;
+  --primary: #2a7a4b; --primary-hover: #1f5e38; --primary-hl: #d0e8d8;
+  --accent: #d97706; --accent-hl: #fde8c0;
+  --blue: #006494; --blue-hl: #c6d8e4;
+  --purple: #6d3dbb; --purple-hl: #e0d4f5;
+  --red: #c0392b; --red-hl: #fde8e6;
+  --shadow-sm: 0 1px 2px oklch(0.2 0.01 80/0.06);
+  --shadow-md: 0 4px 12px oklch(0.2 0.01 80/0.08);
+  --shadow-lg: 0 12px 32px oklch(0.2 0.01 80/0.12);
+}
+[data-theme="dark"] {
+  --bg: #111210; --surface: #181816; --surface-2: #1e1d1b;
+  --surface-off: #222120; --border: #333230; --divider: #2a2927;
+  --text: #e8e6e1; --text-muted: #8a8880; --text-faint: #55534e;
+  --primary: #4aac6e; --primary-hover: #2e8f54; --primary-hl: #1e3829;
+  --accent: #f59e0b; --accent-hl: #3d2f10;
+  --blue: #4d9fcc; --blue-hl: #152535;
+  --purple: #a07ae0; --purple-hl: #2a1d45;
+  --red: #e05c5c; --red-hl: #3a1515;
+  --shadow-sm: 0 1px 2px #000/0.2; --shadow-md: 0 4px 12px #000/0.3; --shadow-lg: 0 12px 32px #000/0.4;
+}
+html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body { min-height: 100dvh; font-family: var(--font-body); font-size: var(--text-base); color: var(--text); background: var(--bg); }
+img, svg { display: block; max-width: 100%; }
+button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+
+/* HEADER */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: color-mix(in oklch, var(--surface) 90%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--divider);
+  padding: var(--space-4) var(--space-8);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo {
+  display: flex; align-items: center; gap: var(--space-3);
+  font-family: var(--font-display); font-size: var(--text-lg); color: var(--primary);
+}
+.logo svg { color: var(--primary); }
+.header-right { display: flex; align-items: center; gap: var(--space-4); }
+.badge-version {
+  font-size: var(--text-xs); background: var(--primary-hl);
+  color: var(--primary); padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full); font-weight: 600; letter-spacing: 0.04em;
+}
+.theme-toggle {
+  width: 36px; height: 36px; border-radius: var(--radius-full);
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+  background: var(--surface); transition: background var(--transition), border-color var(--transition);
+}
+.theme-toggle:hover { background: var(--surface-off); }
+
+/* HERO */
+.hero {
+  padding: var(--space-20) var(--space-8) var(--space-12);
+  max-width: 1200px; margin: 0 auto; text-align: center;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--primary); background: var(--primary-hl);
+  padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); margin-bottom: var(--space-6);
+}
+.hero h1 {
+  font-family: var(--font-display); font-size: var(--text-2xl);
+  color: var(--text); line-height: 1.1; margin-bottom: var(--space-4);
+}
+.hero h1 em { color: var(--primary); font-style: italic; }
+.hero p { font-size: var(--text-lg); color: var(--text-muted); max-width: 60ch; margin: 0 auto var(--space-10); }
+.hero-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4); max-width: 700px; margin: 0 auto;
+}
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+.stat-num { font-size: var(--text-xl); font-weight: 700; color: var(--primary); font-family: var(--font-display); }
+.stat-label { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-1); }
+
+/* MAIN CONTAINER */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-8) var(--space-20); }
+
+/* SECTION TITLES */
+.section-header { margin-bottom: var(--space-8); }
+.section-tag {
+  display: inline-block; font-size: var(--text-xs); font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);
+  margin-bottom: var(--space-3);
+}
+.section-title { font-family: var(--font-display); font-size: var(--text-xl); color: var(--text); }
+
+/* TECH STACK GRID */
+.tech-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4); margin-bottom: var(--space-16);
+}
+.tech-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); padding: var(--space-6);
+  box-shadow: var(--shadow-sm); transition: box-shadow var(--transition), transform var(--transition);
+}
+.tech-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.tech-icon {
+  width: 44px; height: 44px; border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: var(--space-4);
+}
+.tech-icon.green { background: var(--primary-hl); }
+.tech-icon.amber { background: var(--accent-hl); }
+.tech-icon.blue { background: var(--blue-hl); }
+.tech-icon.purple { background: var(--purple-hl); }
+.tech-name { font-weight: 700; font-size: var(--text-base); margin-bottom: var(--space-2); }
+.tech-desc { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.5; }
+.tech-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
+.tech-tag {
+  font-size: var(--text-xs); padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full); border: 1px solid var(--border);
+  color: var(--text-muted); background: var(--surface-2);
+}
+
+/* PHASES / ROADMAP */
+.phases { margin-bottom: var(--space-16); }
+.phase-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); padding: var(--space-6) var(--space-8);
+  margin-bottom: var(--space-5); box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition);
+}
+.phase-card:hover { box-shadow: var(--shadow-md); }
+.phase-header {
+  display: flex; align-items: center; gap: var(--space-4);
+  cursor: pointer; user-select: none;
+}
+.phase-num {
+  width: 40px; height: 40px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: var(--text-sm); flex-shrink: 0;
+}
+.phase-num.p1 { background: var(--blue-hl); color: var(--blue); }
+.phase-num.p2 { background: var(--primary-hl); color: var(--primary); }
+.phase-num.p3 { background: var(--accent-hl); color: var(--accent); }
+.phase-num.p4 { background: var(--purple-hl); color: var(--purple); }
+.phase-num.p5 { background: var(--red-hl); color: var(--red); }
+.phase-meta { flex: 1; }
+.phase-title { font-weight: 700; font-size: var(--text-base); }
+.phase-sub { font-size: var(--text-sm); color: var(--text-muted); margin-top: 2px; }
+.phase-week {
+  font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.04em;
+  padding: var(--space-2) var(--space-4); border-radius: var(--radius-full);
+  border: 1px solid var(--border); color: var(--text-muted); background: var(--surface-2);
+  white-space: nowrap;
+}
+.phase-toggle {
+  width: 28px; height: 28px; border-radius: var(--radius-full);
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+  background: var(--surface-2); font-size: 14px; transition: transform var(--transition);
+  flex-shrink: 0;
+}
+.phase-toggle.open { transform: rotate(180deg); }
+.phase-body {
+  display: none; padding-top: var(--space-6);
+  border-top: 1px solid var(--divider); margin-top: var(--space-5);
+}
+.phase-body.open { display: block; }
+.tasks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+.task-group h4 { font-size: var(--text-sm); font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-3); }
+.task-list { list-style: none; }
+.task-list li {
+  display: flex; align-items: flex-start; gap: var(--space-3);
+  font-size: var(--text-sm); color: var(--text); padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--divider);
+}
+.task-list li:last-child { border-bottom: none; }
+.task-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px;
+}
+.task-dot.green { background: var(--primary); }
+.task-dot.amber { background: var(--accent); }
+.task-dot.blue { background: var(--blue); }
+.task-dot.purple { background: var(--purple); }
+.task-dot.red { background: var(--red); }
+
+/* FEATURES TABLE */
+.features-section { margin-bottom: var(--space-16); }
+.features-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4);
+}
+.feature-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+.feature-icon { font-size: 28px; margin-bottom: var(--space-3); }
+.feature-title { font-weight: 700; font-size: var(--text-base); margin-bottom: var(--space-2); }
+.feature-desc { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6; margin-bottom: var(--space-4); }
+.feature-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.chip {
+  font-size: var(--text-xs); font-weight: 600; padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+}
+.chip.green { background: var(--primary-hl); color: var(--primary); }
+.chip.amber { background: var(--accent-hl); color: var(--accent); }
+.chip.blue { background: var(--blue-hl); color: var(--blue); }
+.chip.purple { background: var(--purple-hl); color: var(--purple); }
+
+/* TEAM */
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); margin-bottom: var(--space-16); }
+.team-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); padding: var(--space-6); text-align: center;
+  box-shadow: var(--shadow-sm); transition: box-shadow var(--transition), transform var(--transition);
+}
+.team-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.team-avatar {
+  width: 56px; height: 56px; border-radius: var(--radius-full);
+  margin: 0 auto var(--space-4); display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+}
+.team-role { font-weight: 700; font-size: var(--text-sm); margin-bottom: var(--space-1); }
+.team-desc { font-size: var(--text-xs); color: var(--text-muted); line-height: 1.5; }
+
+/* TIMELINE */
+.timeline { position: relative; margin-bottom: var(--space-16); }
+.timeline::before {
+  content: ''; position: absolute; left: 20px; top: 0; bottom: 0;
+  width: 2px; background: var(--divider);
+}
+.tl-item { position: relative; padding-left: 56px; margin-bottom: var(--space-8); }
+.tl-dot {
+  position: absolute; left: 10px; top: 4px;
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 2px var(--primary);
+  background: var(--primary);
+}
+.tl-dot.done { background: var(--primary); }
+.tl-dot.active { background: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+.tl-dot.todo { background: var(--surface-2); box-shadow: 0 0 0 2px var(--border); }
+.tl-week { font-size: var(--text-xs); font-weight: 700; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: var(--space-1); }
+.tl-title { font-weight: 700; font-size: var(--text-base); margin-bottom: var(--space-2); }
+.tl-items { font-size: var(--text-sm); color: var(--text-muted); }
+
+/* FOOTER */
+.footer {
+  border-top: 1px solid var(--divider); padding: var(--space-8);
+  text-align: center; font-size: var(--text-sm); color: var(--text-muted);
+}
+
+/* SECTION DIVIDER */
+.section-divider { height: 1px; background: var(--divider); margin: var(--space-12) 0; }
+
+@media (max-width: 768px) {
+  .hero { padding: var(--space-12) var(--space-4) var(--space-8); }
+  .container { padding: 0 var(--space-4) var(--space-16); }
+  .tech-grid { grid-template-columns: 1fr; }
+  .tasks-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .header { padding: var(--space-3) var(--space-4); }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="Fat Off Diet logo">
+      <rect width="32" height="32" rx="8" fill="currentColor" opacity="0.12"/>
+      <circle cx="16" cy="13" r="6" stroke="currentColor" stroke-width="2" fill="none"/>
+      <path d="M10 22 C10 18 22 18 22 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M14 13 L15.5 15 L18.5 10.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Fat Off Diet
+  </div>
+  <div class="header-right">
+    <span class="badge-version">MVP v1.0</span>
+    <button class="theme-toggle" data-theme-toggle aria-label="Змінити тему">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-tag">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+    ХНУРЕ · ІПЗ · 2026
+  </div>
+  <h1>План розробки<br><em>Fat Off Diet</em></h1>
+  <p>Клієнт-серверний додаток для планування харчування з рецептами, трекінгом калорій та персоналізованими дієтами</p>
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Спринтів розробки</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">8</div>
+      <div class="stat-label">Тижнів до MVP</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Ключових функцій</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">JS</div>
+      <div class="stat-label">React + Node.js</div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- TECH STACK -->
+  <div class="section-header">
+    <div class="section-tag">Технічний стек</div>
+    <div class="section-title">Що будемо використовувати</div>
+  </div>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-icon green">⚛️</div>
+      <div class="tech-name">React.js (Frontend)</div>
+      <div class="tech-desc">SPA-інтерфейс користувача. Компонентна архітектура, хуки, React Router для навігації між сторінками.</div>
+      <div class="tech-tags">
+        <span class="tech-tag">React 18</span>
+        <span class="tech-tag">React Router</span>
+        <span class="tech-tag">Axios</span>
+        <span class="tech-tag">Chart.js</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon amber">🟩</div>
+      <div class="tech-name">Node.js + Express (Backend)</div>
+      <div class="tech-desc">REST API сервер. Обробляє запити клієнта, валідує дані, взаємодіє з базою даних. Логування в JSON.</div>
+      <div class="tech-tags">
+        <span class="tech-tag">Express 4</span>
+        <span class="tech-tag">JWT Auth</span>
+        <span class="tech-tag">bcrypt</span>
+        <span class="tech-tag">cors</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon green">🍃</div>
+      <div class="tech-name">MongoDB (База даних)</div>
+      <div class="tech-desc">NoSQL БД — зберігає рецепти, профілі користувачів, записи щоденника. MongoDB Atlas (безкоштовний хмарний хостинг).</div>
+      <div class="tech-tags">
+        <span class="tech-tag">MongoDB Atlas</span>
+        <span class="tech-tag">Mongoose</span>
+        <span class="tech-tag">Schemas</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon blue">🐙</div>
+      <div class="tech-name">GitHub (Репозиторій)</div>
+      <div class="tech-desc">Командний репозиторій. Гілки за фічами, PR-review, GitHub Actions для CI. Доступ для викладача.</div>
+      <div class="tech-tags">
+        <span class="tech-tag">Git Flow</span>
+        <span class="tech-tag">Branches</span>
+        <span class="tech-tag">PR Reviews</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon purple">📋</div>
+      <div class="tech-name">Trello (Kanban)</div>
+      <div class="tech-desc">Управління задачами і багами. Колонки: Backlog → In Progress → Review → Done. Доступ команди та викладача.</div>
+      <div class="tech-tags">
+        <span class="tech-tag">Kanban</span>
+        <span class="tech-tag">Labels</span>
+        <span class="tech-tag">Checklists</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon amber">🎨</div>
+      <div class="tech-name">VS Code (IDE)</div>
+      <div class="tech-desc">Основне середовище розробки. Extensions: ESLint, Prettier, Thunder Client (тест API), GitLens, MongoDB for VS Code.</div>
+      <div class="tech-tags">
+        <span class="tech-tag">ESLint</span>
+        <span class="tech-tag">Prettier</span>
+        <span class="tech-tag">Thunder Client</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- FEATURES -->
+  <div class="section-header">
+    <div class="section-tag">Функціонал</div>
+    <div class="section-title">Що буде зроблено у проекті</div>
+  </div>
+  <div class="features-grid features-section">
+    <div class="feature-card">
+      <div class="feature-icon">👤</div>
+      <div class="feature-title">Авторизація та профіль</div>
+      <div class="feature-desc">Реєстрація та вхід за допомогою JWT токенів. Профіль зберігає ціль дієти, вагу, зріст, вік та активність. Автоматичний розрахунок TDEE (добова норма калорій) за формулою Mifflin-St Jeor.</div>
+      <div class="feature-chips">
+        <span class="chip green">MVP</span>
+        <span class="chip blue">JWT</span>
+        <span class="chip amber">Спринт 2</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🥗</div>
+      <div class="feature-title">Каталог рецептів</div>
+      <div class="feature-desc">База 100–150 рецептів з категоріями (сушка, кето, набір маси, підтримання). Фільтри за категорією, часом готування та виключеними продуктами. Детальна сторінка з БЖУ та інструкцією.</div>
+      <div class="feature-chips">
+        <span class="chip green">MVP</span>
+        <span class="chip blue">Фільтри</span>
+        <span class="chip amber">Спринт 2–3</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">Трекінг харчування</div>
+      <div class="feature-desc">Щоденник їжі — додавання страв із рецептів або вручну. Автоматичний підрахунок калорій та БЖУ за день. Порівняння з нормою та прогрес-бари у реальному часі.</div>
+      <div class="feature-chips">
+        <span class="chip green">MVP</span>
+        <span class="chip purple">Charts</span>
+        <span class="chip amber">Спринт 3</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🛒</div>
+      <div class="feature-title">Список покупок</div>
+      <div class="feature-desc">Автоматична генерація списку інгредієнтів із вибраних рецептів. Підсумування однакових продуктів, чекліст із відмітками, можливість редагування та очищення.</div>
+      <div class="feature-chips">
+        <span class="chip green">MVP</span>
+        <span class="chip amber">Спринт 3</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📈</div>
+      <div class="feature-title">Аналітика та графіки</div>
+      <div class="feature-desc">Дашборд із графіком динаміки ваги та споживання калорій за тиждень/місяць. Кругова діаграма розподілу БЖУ. Рекомендації по коригуванню раціону. Реалізовано через Chart.js.</div>
+      <div class="feature-chips">
+        <span class="chip blue">Chart.js</span>
+        <span class="chip purple">Розширення</span>
+        <span class="chip amber">Спринт 4</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">Безпека та логування</div>
+      <div class="feature-desc">Сервер логує всі HTTP-запити у JSON-файл (метод, URL, тіло, статус, час). Валідація всіх вхідних даних на сервері (тонкий клієнт). Захист маршрутів через JWT middleware.</div>
+      <div class="feature-chips">
+        <span class="chip green">MVP</span>
+        <span class="chip blue">Логування</span>
+        <span class="chip amber">Спринт 2</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- PHASES -->
+  <div class="section-header">
+    <div class="section-tag">Roadmap / Спринти</div>
+    <div class="section-title">Поетапний план розробки</div>
+  </div>
+  <div class="phases">
+
+    <div class="phase-card">
+      <div class="phase-header" onclick="togglePhase(this)">
+        <div class="phase-num p1">1</div>
+        <div class="phase-meta">
+          <div class="phase-title">Інфраструктура та налаштування проекту</div>
+          <div class="phase-sub">Репозиторій, структура папок, підключення БД, базовий сервер</div>
+        </div>
+        <span class="phase-week">Тиждень 1</span>
+        <div class="phase-toggle">▼</div>
+      </div>
+      <div class="phase-body">
+        <div class="tasks-grid">
+          <div class="task-group">
+            <h4>Backend задачі</h4>
+            <ul class="task-list">
+              <li><span class="task-dot blue"></span>Ініціалізація Node.js + Express проекту (npm init)</li>
+              <li><span class="task-dot blue"></span>Підключення MongoDB Atlas + налаштування Mongoose</li>
+              <li><span class="task-dot blue"></span>Базова структура папок: routes/, controllers/, models/, middleware/</li>
+              <li><span class="task-dot blue"></span>Налаштування CORS, JSON body parser, .env файлу</li>
+              <li><span class="task-dot blue"></span>Реалізація модуля логування у JSON-файл (logger.js)</li>
+            </ul>
+          </div>
+          <div class="task-group">
+            <h4>Frontend та DevOps задачі</h4>
+            <ul class="task-list">
+              <li><span class="task-dot green"></span>Ініціалізація React додатку (Create React App / Vite)</li>
+              <li><span class="task-dot green"></span>Налаштування Axios для HTTP-запитів до API</li>
+              <li><span class="task-dot green"></span>Реєстрація командного репозиторію на GitHub</li>
+              <li><span class="task-dot green"></span>Створення Trello дошки, колонки Kanban</li>
+              <li><span class="task-dot green"></span>Надання доступу до GitHub + Trello викладачу</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-header" onclick="togglePhase(this)">
+        <div class="phase-num p2">2</div>
+        <div class="phase-meta">
+          <div class="phase-title">Авторизація + моделі даних + базовий API</div>
+          <div class="phase-sub">JWT-авторизація, схеми MongoDB, CRUD для рецептів</div>
+        </div>
+        <span class="phase-week">Тижні 2–3</span>
+        <div class="phase-toggle">▼</div>
+      </div>
+      <div class="phase-body">
+        <div class="tasks-grid">
+          <div class="task-group">
+            <h4>Backend задачі</h4>
+            <ul class="task-list">
+              <li><span class="task-dot blue"></span>Mongoose Schema: User (email, password, profile, goal)</li>
+              <li><span class="task-dot blue"></span>Mongoose Schema: Recipe (name, category, calories, BJU, ingredients)</li>
+              <li><span class="task-dot blue"></span>POST /api/auth/register — реєстрація + bcrypt хешування пароля</li>
+              <li><span class="task-dot blue"></span>POST /api/auth/login — вхід + генерація JWT токена</li>
+              <li><span class="task-dot blue"></span>JWT middleware для захисту приватних маршрутів</li>
+              <li><span class="task-dot blue"></span>GET/POST /api/recipes — список та додавання рецептів</li>
+              <li><span class="task-dot blue"></span>Seed-скрипт: заповнення 100+ рецептів у MongoDB</li>
+            </ul>
+          </div>
+          <div class="task-group">
+            <h4>Frontend задачі</h4>
+            <ul class="task-list">
+              <li><span class="task-dot green"></span>Сторінка реєстрації та входу (форми, валідація)</li>
+              <li><span class="task-dot green"></span>Збереження JWT токена у пам'яті (context/state)</li>
+              <li><span class="task-dot green"></span>Protected Routes — redirect якщо не авторизований</li>
+              <li><span class="task-dot green"></span>Онбординг: вибір цілі дієти після реєстрації</li>
+              <li><span class="task-dot green"></span>Сторінка каталогу рецептів — базовий список карток</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-header" onclick="togglePhase(this)">
+        <div class="phase-num p3">3</div>
+        <div class="phase-meta">
+          <div class="phase-title">Основний функціонал: рецепти + трекінг + покупки</div>
+          <div class="phase-sub">Фільтри рецептів, щоденник їжі, список покупок, розрахунок калорій</div>
+        </div>
+        <span class="phase-week">Тижні 4–5</span>
+        <div class="phase-toggle">▼</div>
+      </div>
+      <div class="phase-body">
+        <div class="tasks-grid">
+          <div class="task-group">
+            <h4>Backend задачі</h4>
+            <ul class="task-list">
+              <li><span class="task-dot amber"></span>Mongoose Schema: DailyLog (userId, date, meals[], totalCalories)</li>
+              <li><span class="task-dot amber"></span>POST /api/logs — додати запис у щоденник</li>
+              <li><span class="task-dot amber"></span>GET /api/logs?date=2026-04-05 — отримати записи за день</li>
+              <li><span class="task-dot amber"></span>GET /api/recipes?category=кето&exclude=milk — фільтрація</li>
+              <li><span class="task-dot amber"></span>Розрахунок TDEE (Mifflin-St Jeor) у profileController</li>
+            </ul>
+          </div>
+          <div class="task-group">
+            <h4>Frontend задачі</h4>
+            <ul class="task-list">
+              <li><span class="task-dot green"></span>Фільтри на сторінці рецептів (категорія, виключення)</li>
+              <li><span class="task-dot green"></span>Детальна сторінка рецепту + кнопка "Додати в день"</li>
+              <li><span class="task-dot green"></span>Сторінка щоденника — список страв + підрахунок БЖУ</li>
+              <li><span class="task-dot green"></span>Прогрес-бари (спожито / норма) у реальному часі</li>
+              <li><span class="task-dot green"></span>Сторінка списку покупок — генерація + чекліст</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-header" onclick="togglePhase(this)">
+        <div class="phase-num p4">4</div>
+        <div class="phase-meta">
+          <div class="phase-title">Аналітика, дашборд та тестування</div>
+          <div class="phase-sub">Графіки Chart.js, дашборд, тест-документація, виправлення багів</div>
+        </div>
+        <span class="phase-week">Тижні 6–7</span>
+        <div class="phase-toggle">▼</div>
+      </div>
+      <div class="phase-body">
+        <div class="tasks-grid">
+          <div class="task-group">
+            <h4>Аналітика та Backend</h4>
+            <ul class="task-list">
+              <li><span class="task-dot purple"></span>GET /api/logs/stats?period=week — статистика за тиждень</li>
+              <li><span class="task-dot purple"></span>Агрегація калорій по днях через MongoDB pipeline</li>
+              <li><span class="task-dot purple"></span>Лінійний графік калорій за тиждень (Chart.js)</li>
+              <li><span class="task-dot purple"></span>Кругова діаграма розподілу БЖУ за день</li>
+              <li><span class="task-dot purple"></span>Дашборд: KPI-картки + графіки + останні рецепти</li>
+            </ul>
+          </div>
+          <div class="task-group">
+            <h4>Тестування (QA)</h4>
+            <ul class="task-list">
+              <li><span class="task-dot amber"></span>Тест-кейси для всіх API-маршрутів (Thunder Client)</li>
+              <li><span class="task-dot amber"></span>Функціональне тестування форм авторизації</li>
+              <li><span class="task-dot amber"></span>Тестування фільтрів рецептів (позитивні + негативні)</li>
+              <li><span class="task-dot amber"></span>Тестування трекінгу: додавання / видалення їжі</li>
+              <li><span class="task-dot amber"></span>Формування звіту по тестуванню у Google Docs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-header" onclick="togglePhase(this)">
+        <div class="phase-num p5">5</div>
+        <div class="phase-meta">
+          <div class="phase-title">Фінальна доопрацювання та здача</div>
+          <div class="phase-sub">Регресійне тестування, UI-polish, звіт, презентація команди</div>
+        </div>
+        <span class="phase-week">Тиждень 8</span>
+        <div class="phase-toggle">▼</div>
+      </div>
+      <div class="phase-body">
+        <div class="tasks-grid">
+          <div class="task-group">
+            <h4>Технічні задачі</h4>
+            <ul class="task-list">
+              <li><span class="task-dot red"></span>Регресійне тестування після виправлення багів</li>
+              <li><span class="task-dot red"></span>Оновлення seed-даних (150 рецептів)</li>
+              <li><span class="task-dot red"></span>Адаптивна верстка для мобільних пристроїв</li>
+              <li><span class="task-dot red"></span>Налаштування README.md з інструкцією запуску</li>
+              <li><span class="task-dot red"></span>Фінальний коміт + тег v1.0 у GitHub</li>
+            </ul>
+          </div>
+          <div class="task-group">
+            <h4>Документація та здача</h4>
+            <ul class="task-list">
+              <li><span class="task-dot amber"></span>Оновлення звіту з UML-діаграмами у Google Docs</li>
+              <li><span class="task-dot amber"></span>Презентація проекту в Google Slides (оновлення)</li>
+              <li><span class="task-dot amber"></span>Перевірка доступу викладача до всіх ресурсів</li>
+              <li><span class="task-dot amber"></span>Підготовка демо-відео або live demo</li>
+              <li><span class="task-dot amber"></span>Захист проекту перед групою</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- TEAM -->
+  <div class="section-header">
+    <div class="section-tag">Команда</div>
+    <div class="section-title">Ролі та відповідальності</div>
+  </div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar" style="background:var(--blue-hl);">🧭</div>
+      <div class="team-role">Project Manager</div>
+      <div class="team-desc">Ведення Trello, спринт-планування, координація команди, комунікація з викладачем</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" style="background:var(--primary-hl);">⚙️</div>
+      <div class="team-role">Backend Developer</div>
+      <div class="team-desc">Node.js/Express API, MongoDB схеми, JWT-авторизація, логування, seed-скрипт</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" style="background:var(--accent-hl);">🎨</div>
+      <div class="team-role">Frontend Developer</div>
+      <div class="team-desc">React компоненти, сторінки, інтеграція з API, Chart.js графіки, адаптивна верстка</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" style="background:var(--purple-hl);">🔍</div>
+      <div class="team-role">QA Engineer</div>
+      <div class="team-desc">Тест-кейси, функціональне та регресійне тестування, тест-документація у Google Docs</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- STRUCTURE -->
+  <div class="section-header">
+    <div class="section-tag">Архітектура</div>
+    <div class="section-title">Структура проекту</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-16);">
+    <div class="tech-card">
+      <div class="tech-name" style="margin-bottom:var(--space-4);">📁 Backend (server/)</div>
+      <pre style="font-size:var(--text-xs);color:var(--text-muted);line-height:1.8;font-family:monospace;white-space:pre-wrap;">server/
+├── models/
+│   ├── User.js
+│   ├── Recipe.js
+│   └── DailyLog.js
+├── routes/
+│   ├── auth.js
+│   ├── recipes.js
+│   └── logs.js
+├── controllers/
+│   ├── authController.js
+│   ├── recipeController.js
+│   └── logController.js
+├── middleware/
+│   └── authMiddleware.js
+├── utils/
+│   ├── logger.js
+│   └── serializer.js
+├── data/
+│   └── seed.js
+├── logs/
+│   └── server_log.json
+└── server.js</pre>
+    </div>
+    <div class="tech-card">
+      <div class="tech-name" style="margin-bottom:var(--space-4);">📁 Frontend (client/)</div>
+      <pre style="font-size:var(--text-xs);color:var(--text-muted);line-height:1.8;font-family:monospace;white-space:pre-wrap;">client/src/
+├── components/
+│   ├── Navbar.jsx
+│   ├── RecipeCard.jsx
+│   ├── ProgressBar.jsx
+│   └── ChartWidget.jsx
+├── pages/
+│   ├── Login.jsx
+│   ├── Register.jsx
+│   ├── Dashboard.jsx
+│   ├── Recipes.jsx
+│   ├── RecipeDetail.jsx
+│   ├── Tracker.jsx
+│   └── ShoppingList.jsx
+├── context/
+│   └── AuthContext.jsx
+├── services/
+│   └── api.js
+└── App.jsx</pre>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  Fat Off Diet · ХНУРЕ ІПЗ 2026 · React + Node.js + MongoDB
+</footer>
+
+<script>
+// Theme toggle
+(function(){
+  const t = document.querySelector('[data-theme-toggle]');
+  const r = document.documentElement;
+  let d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+  r.setAttribute('data-theme', d);
+  updateIcon(t, d);
+  t && t.addEventListener('click', () => {
+    d = d === 'dark' ? 'light' : 'dark';
+    r.setAttribute('data-theme', d);
+    updateIcon(t, d);
+  });
+  function updateIcon(btn, theme) {
+    if (!btn) return;
+    btn.innerHTML = theme === 'dark'
+      ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  }
+})();
+
+// Phase toggle
+function togglePhase(header) {
+  const body = header.nextElementSibling;
+  const toggle = header.querySelector('.phase-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  toggle.classList.toggle('open', !isOpen);
+}
+
+// Open first phase by default
+document.querySelector('.phase-body').classList.add('open');
+document.querySelector('.phase-toggle').classList.add('open');
+</script>
+</body>
+</html>
